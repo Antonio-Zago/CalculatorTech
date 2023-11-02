@@ -1,5 +1,7 @@
 html {
     font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -12,11 +14,6 @@ html {
     src: url('/fontes/Quicksand-VariableFont_wght.ttf')
 }
 
-html {
-    position: relative;
-    min-height: 100%;
-}
-
 body {
   margin-bottom: 60px;
 }
@@ -27,5 +24,14 @@ body {
 }
 
 header {
+    background-color: #B7CAFA;
+}
+
+/*Customização grids de valores*/
+.linhasGrid{
+    margin-top: 5px;
+}
+
+.entradaValores {
     background-color: #B7CAFA;
 }
