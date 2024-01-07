@@ -1,17 +1,10 @@
 ﻿<div class="row linhasGrid">
-	    <div class="col-1">
-			<input name="valor[]" class="form-control entradaValores" />
-	    </div>
-	    <div class="col-1">
-		    <input  name="valor[]" class="form-control entradaValores" />
-	    </div>
-	    <div class="col-1">
-		    <input name="valor[]" class="form-control entradaValores" />
-	    </div>
-	    <div class="col-1">
-		    <input  name="valor[]" class="form-control entradaValores" />
-	    </div>
-	    <div class="col-1">
-		    <input  name="valor[]" class="form-control entradaValores" />
-	    </div>
+	@{
+		var numeroColunasGrid = 5;
+		for (int coluna = 1; coluna <= numeroColunasGrid; coluna++ )
+		{
+			ViewData["coluna"] = coluna;
+			<partial name="_EntradaValor" view-data="ViewData"/>
+		}	
+	}
 </div>

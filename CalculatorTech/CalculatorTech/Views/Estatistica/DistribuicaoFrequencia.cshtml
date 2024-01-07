@@ -6,16 +6,15 @@
 <br>
 
 <form asp-action="Calcular">
-
-	<partial name="_LinhaGridEntradaValores"/>
-
-	<partial name="_LinhaGridEntradaValores"/>
-
-	<partial name="_LinhaGridEntradaValores"/>
-
-	<partial name="_LinhaGridEntradaValores"/>
-
-	<partial name="_LinhaGridEntradaValores"/>
+	@{
+		var numeroLinhasGrid = 5;
+		for (int linha = 1; linha <= numeroLinhasGrid; linha++ )
+		{
+			ViewData["linha"] = linha;
+			<partial name="_LinhaGridEntradaValores" view-data="ViewData"/>
+		}	
+	}
+	
 
 	<div class="form-group">
             <input type="submit" value="Calcular" class="btn btn-primary" />
