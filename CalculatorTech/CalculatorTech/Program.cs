@@ -1,7 +1,12 @@
+using CalculatorTech.Services;
+using CalculatorTech.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<IEstatisticaService, EstatisticaService>();
 
 var app = builder.Build();
 
@@ -22,6 +27,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Estatistica}/{action=DistribuicaoFrequencia}/{id?}");
 
 app.Run();

@@ -35,3 +35,17 @@ header {
 .entradaValores {
     background-color: #B7CAFA;
 }
+
+.textoPagina{
+    font-size:20px;
+}
+.tituloTextoPagina {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.containerTextoPagina {
+    margin-top: 50px;
+    
+    
+}

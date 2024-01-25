@@ -1,23 +1,174 @@
-﻿
-<h2>Tabela de distribuição de frequência</h2>
+﻿@using CalculatorTech.Models.TabelaDitribuicaoFrequencia
+@model TabelaDistribuicaoFrequencia
+
+<h2>Calculadora de distribuição de frequência</h2>
 <br>
 <br>
 <p class="font-weight-normal">Insira os números de entrada para a criação da tabela de frequência:</p>
 <br>
 
-<form asp-action="Calcular">
+<form asp-action="DistribuicaoFrequencia">
 	@{
-		var numeroLinhasGrid = 5;
-		for (int linha = 1; linha <= numeroLinhasGrid; linha++ )
+		if (Model == null)
 		{
-			ViewData["linha"] = linha;
-			<partial name="_LinhaGridEntradaValores" view-data="ViewData"/>
-		}	
-	}
-	
+			<div class="row linhasGrid">
+				@for (int linha = 1; linha <= (int)TempData.Peek("numeroLinhasGridEntrada"); linha++)
+				{
+					<div class="col-2">
+						<input type="number" name="valor" class="form-control entradaValores" value="" />
+					</div>
+					<div class="col-2">
+						<input type="number" name="valor" class="form-control entradaValores" />
+					</div>
+					<div class="col-2">
+						<input type="number" name="valor" class="form-control entradaValores" />
+					</div>
+					<div class="col-2">
+						<input type="number" name="valor" class="form-control entradaValores" />
+					</div>
+					<div class="col-2">
+						<input type="number" name="valor" class="form-control entradaValores" />
+					</div>
+					<div class="col-2">
+						<input type="number" name="valor" class="form-control entradaValores" />
+					</div>
+				}
+			</div>
+		}
+		else
+		{
+			<div class="row linhasGrid">
+				@foreach (var valor in Model.Valores)
+				{
 
-	<div class="form-group">
-            <input type="submit" value="Calcular" class="btn btn-primary" />
-    </div>
+					<div class="col-2">
+						<input type="number" name="valor" class="form-control entradaValores" value="@valor" />
+					</div>
+
+				}
+			</div>
+		}
+
+	}
+	<br>
+	<div class="row">
+		<div class="col-1 form-group">
+			<input type="submit" value="Calcular" class="btn btn-success" />
+		</div>
+		<div class="col-2">
+			<p class="button">
+				<a class="btn btn-primary" asp-controller="Estatistica"
+				   asp-action="AdicionarLinhasGrid">
+					Adicionar linha
+				</a>
+			</p>
+		</div>
+
+	</div>
+
 
 </form>
+
+
+
+
+
+@if (@Model != null)
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Classes</th>
+				<th scope="col">Frequência absoluta</th>
+				<th scope="col">Frequência relativa</th>
+				<th scope="col">Frequência absoluta acumulada</th>
+				<th scope="col">Frequência relativa acumulada</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model.RegistrosTabela)
+			{
+				<tr>
+					<td>@item.DeClasse - @item.AteClasse</td>
+					<td>@item.FrequenciaAbsoluta</td>
+					<td>@item.FrequenciaRelativa</td>
+					<td>@item.FrequenciaAbsolutaAcumulada</td>
+					<td>@item.FrequenciaRelativaAcumulada</td>
+				</tr>
+			}
+
+		</tbody>
+	</table>
+}
+
+<div class="border border-primary-subtle rounded-2 p-3 containerTextoPagina">
+
+	<p class="tituloTextoPagina"> Distribuição de frequência</p>
+
+	<p class="textoPagina">A distribuição de frequência é uma ferramenta estatística fundamental que organiza dados em categorias distintas e apresenta a frequência com que cada categoria ocorre. 
+	Essa análise é crucial para compreender a distribuição e padrões subjacentes nos dados, proporcionando uma visão mais clara do conjunto de informações.</p>
+
+	<p class="tituloTextoPagina">Como Montar uma Tabela de Distribuição de Frequência:</p>
+
+	<p class="textoPagina">
+
+		Coleta de Dados:
+		<br />
+		O primeiro passo é coletar os dados brutos. Eles podem ser obtidos por meio de observações, experimentos, pesquisas ou qualquer outra fonte relevante. 
+		<br />
+		<br />
+		Organização dos Dados:
+		<br />
+		Organize os dados em ordem crescente ou decrescente, dependendo da natureza da variável. Essa organização facilita a análise e interpretação dos resultados.
+		<br />
+		<br />
+		Determinação do Número de Classes (K):
+		<br />
+		Escolha o número de classes que será utilizado na distribuição. Um bom ponto de partida é utilizar a regra de Sturges, que sugere K = 1 + log2(N), onde N é o número total de observações.
+		<br />
+		<br />
+		Intervalos de Classes:
+		<br />
+		Calcule a amplitude das classes dividindo a diferença entre o maior e o menor valor pelos intervalos desejados. Arredonde para o número inteiro mais próximo para obter os limites das classes.
+		<br />
+		<br />
+		Construção da Tabela:
+		<br />
+		Crie uma tabela com colunas para as classes, limites de classe, frequência absoluta (número de observações em cada classe) e frequência relativa (percentual ou proporção em relação ao total).
+		<br />
+		<br />
+		Cálculos Adicionais:
+		<br />
+		Calcule a frequência acumulada (soma das frequências absolutas ou relativas até uma determinada classe) e, se necessário, a frequência relativa acumulada.
+	</p>
+
+	<p class="tituloTextoPagina">Exemplo prático:</p>
+
+	<p class="textoPagina">
+		Suponha que temos as seguintes idades de um grupo de pessoas (em anos): 21, 23, 25, 28, 30, 32, 34, 36, 39, 41.
+		<br />
+		Organização:
+		<br />
+		21, 23, 25, 28, 30, 32, 34, 36, 39, 41.
+		<br />
+		<br />
+		Número de Classes (K):
+		<br />
+		Utilizando a regra de Sturges, K = 1 + log2(10) ≈ 4 classes.
+		<br />
+		<br />
+		Intervalos de Classes:
+		<br />
+		Amplitude = (41 - 21) = 20 / 4 = 5. Classes: 21-25, 26-30, 31-35, 36-40, 41-45.
+		<br />
+		<br />
+		<img src="/img/tabelaDistFreq.png" />
+	</p>
+</div>
+
+
+
+
+
+
+
